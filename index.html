@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="This tool reads Google search suggestions by mocking the search for why are NATIONALITY ... , it's just for fun, enjoy!">
+	<meta name="author" content="@housamz">
+
+	<title>The Stereotyper</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Custom CSS -->
+	<style>
+		html{position: relative;min-height: 100%}
+		body{padding-top: 30px;margin-bottom: 60px}
+		textarea{font-family: Consolas, Lucida Console, monospace; background-color: #fff !important}
+		.hidefirst{display: none}
+		.footer {position: absolute;bottom: 0;width: 100%;height: 70px;background-color: #f5f5f5}
+		.text-muted {margin: 20px 0}
+		#nationalityholder{text-transform: capitalize}
+		.autocomplete-suggestion {background:#eee;cursor: pointer; padding: 10px 20px}
+		.autocomplete-suggestions strong {color: #3399FF;font-weight: normal}
+		.autocomplete-selected{color:#3399FF}
+	</style>
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+
+<body>
+
+	<!-- Page Content -->
+	<div class="container">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="text-center">The Stereotyper</h1>
+				<p>
+					This tool reads Google search suggestions by mocking the search for "why are NATIONALITY ... ", it's just for fun, enjoy!
+				</p>
+
+				<form class="form-group input-group form-group-lg" id="emailEncoder" onsubmit="event.preventDefault();">
+					<input type="text" id="nationality" placeholder="Enter nationality here: irish" class="form-control" tabindex="1" autofocus="autofocus" autocomplete="off" />
+					<span class="input-group-btn">
+						<button class="btn btn-primary btn-lg" type="submit" id="encode"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
+					</span>
+				</form>
+			</div>
+		</div>
+		<!-- /.row -->
+
+		<div class="row">
+			<div class="form-group hidefirst">
+				<div class="col-lg-12">
+					<h4>Stereotypes about <a id="nationalityholder"></a>:</h4>
+					<p id="result"></p>
+				</div>
+			</div>
+				<div class="col-lg-12">
+					<br /><br /><a hef="http://bit.ly/thestereotyper">http://bit.ly/thestereotyper</a>
+				</div>
+		</div>
+		<!-- /.row -->
+		
+	</div>
+	<!-- /.container -->
+	
+	<footer class="footer">
+		<div class="container">
+			<p class="text-muted">By <a href="http://hmz.ie/" target="_blank">@housamz</a> 2016 <script>new Date().getFullYear()>2016&&document.write("-"+new Date().getFullYear());</script></p>
+		</div>
+	</footer>
+
+	<!-- jQuery Version 1.11.1 -->
+	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.24/jquery.autocomplete.min.js"></script>
+
+	<script language="javascript" type="text/javascript">
+		$("#encode").on("click", function(){
+			var nationality = $("#nationality").val();
+			if(nationality != ''){ 
+				$link = "get.php?url="+nationality;
+
+				$.post( $link, function( data ) {
+					$("#result").text(data+'.');
+					$("#nationalityholder").text(nationality);
+					$('.hidefirst').show();
+				});
+				
+			}
+		});
+
+		a1 = $('#nationality').autocomplete({
+			delimiter: /(,|;)\s*/,
+			lookup:'Afghans,Albanians,Algerians,Americans,Andorrans,Angolans,Antiguans,Argentineans,Armenians,Australians,Austrians,Azerbaijanis,Bahamians,Bahrainis,Bangladeshis,Barbadians,Barbudans,Batswana,Belarusians,Belgians,Belizeans,Beninese,Bhutanese,Bolivians,Bosnians,Brazilians,British,Bruneians,Bulgarians,Burkinabe,Burmese,Burundians,Cambodians,Cameroonians,Canadians,Cape Verdeans,Central Africans,Chadians,Chileans,Chinese,Colombians,Comorans,Congolese,Costa Ricans,Croatians,Cubans,Cypriot,Czech,Danish,Djiboutis,Dominicans,Dutch,East Timorese,Ecuadoreans,Egyptians,Emirians,Equatorial Guineans,Eritreans,Estonians,Ethiopians,Fijians,Filipino,Finnish,French,Gabonese,Gambians,Georgians,Germans,Ghanaians,Greek,Grenadians,Guatemalans,Guinea-Bissauans,Guineans,Guyanese,Haitians,Herzegovinians,Hondurans,Hungarians,Icelanders,Indians,Indonesians,Iranians,Iraqis,Irish,Israelis,Italians,Ivorians,Jamaicans,Japanese,Jordanians,Kazakhstanis,Kenyans,Kittian and Nevisians,Kuwaitis,Kyrgyz,Laotians,Latvians,Lebanese,Liberians,Libyans,Liechtensteiners,Lithuanians,Luxembourgers,Macedonians,Malagasy,Malawians,Malaysians,Maldivans,Malians,Maltese,Marshallese,Mauritanians,Mauritians,Mexicans,Micronesians,Moldovans,Monacans,Mongolians,Moroccans,Mosotho,Motswana,Mozambicans,Namibians,Nauruans,Nepalese,New Zealanders,Ni-Vanuatu,Nicaraguans,Nigeriens,North Koreans,Northern Irish,Norwegians,Omanis,Pakistanis,Palauans,Panamanians,Papua New Guineans,Paraguayans,Peruvians,Polish,Portuguese,Qataris,Romanians,Russians,Rwandans,Saint Lucians,Salvadorans,Samoans,San Marinese,Sao Tomeans,Saudis,Scottish,Senegalese,Serbians,Seychellois,Sierra Leoneans,Singaporeans,Slovakians,Slovenians,Solomon Islanders,Somalis,South Africans,South Koreans,Spanish,Sri Lankans,Sudanese,Surinamers,Swazis,Swedish,Swiss,Syrians,Taiwanese,Tajiks,Tanzanians,Thais,Togolese,Tongans,Trinidadian or Tobagonians,Tunisians,Turkish,Tuvaluans,Ugandans,Ukrainians,Uruguayans,Uzbekistanis,Venezuelans,Vietnamese,Welsh,Yemenite,Zambians,Zimbabweans'.split(',')
+		}); 
+	</script>
+
+</body>
+
+</html>
